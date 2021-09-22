@@ -35,10 +35,10 @@ function getDetails() {
 
 }
 
-const btn = document.querySelector("button");
-btn.addEventListener("click", () => {
+const storeBtn = document.querySelector("#store-button");
+storeBtn.addEventListener("click", () => {
     let details = getDetails();
-    addBookToLibrary(details[0], details[1], details[2]);
+    addBookToLibrary(details[0], details[1], details[2], details[3]);
     displayBooks();
 })
 
@@ -77,7 +77,7 @@ function createCard(book) {
     bookDetails.appendChild(bookTitle);
     bookDetails.appendChild(ul);
 
-    const liArray = [`${book.author}`, "•", `${book.pages}`,'•' , `${book.read}`];
+    const liArray = [`${book.author}`, "•", `${book.pages}`, '•', `${book.read}`];
     for (let i = 0; i <= liArray.length - 1; i++) {
         const li = document.createElement('li');
 
@@ -87,6 +87,27 @@ function createCard(book) {
 
     bookList.appendChild(bookCard);
 
+}
+
+const modal = document.querySelector(".modal");
+const modalBtn = document.querySelector("#modal-btn");
+
+modalBtn.addEventListener('click', () => {
+    toggleModal();
+})
+
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function toggleModal() {
+    if (modal.style.display !== "block") {
+        modal.style.display = "block";
+    } else {
+        modal.style.display = "none";
+    }
 }
 
 displayBooks();
