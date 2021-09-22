@@ -3,26 +3,31 @@ let library = [
         cover: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg",
         title: "The Hobbit",
         author: "Tolkien",
-        pages: 295
+        pages: 295,
+        read: false,
+        id: 123
     },
     {
         cover: "https://images-na.ssl-images-amazon.com/images/I/51MFw+si6RL._SX324_BO1,204,203,200_.jpg",
         title: "The Book of Longings",
         author: "Sue Monk",
-        pages: 228
+        pages: 228,
+        read: false,
+        id: 321
     }
 ];
 
-function Book(cover, title, author, pages, read) {
+function Book(cover, title, author, pages, read, id) {
     this.cover = cover
     this.title = title
     this.author = author
     this.pages = pages
     this.read = read
+    this.id = id
 }
 
-function addBookToLibrary(cover, title, author, pages) {
-    library.push(new Book(cover, title, author, pages));
+function addBookToLibrary(cover, title, author, pages, read, id) {
+    library.push(new Book(cover, title, author, pages, read, id));
 }
 
 function getDetails() {
@@ -30,15 +35,17 @@ function getDetails() {
     let title = document.querySelector("#title").value;
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;
+    let read = document.querySelector("#read").checked ? "Read" : "Not read yet";
+    let id = generateId();
 
-    return [cover, title, author, pages];
+    return [cover, title, author, pages, read, id];
 
 }
 
 const storeBtn = document.querySelector("#store-button");
 storeBtn.addEventListener("click", () => {
     let details = getDetails();
-    addBookToLibrary(details[0], details[1], details[2], details[3]);
+    addBookToLibrary(details[0], details[1], details[2], details[3], details[4], details[5]);
     displayBooks();
 })
 
@@ -59,18 +66,24 @@ function createCard(book) {
     const bookDetails = document.createElement("div");
     const bookTitle = document.createElement("p");
     const ul = document.createElement("ul");
+    const trash = document.createElement("span");
+
+    bookCard.setAttribute("data-key", `${book.id}`);
 
     bookCard.classList.add("book-card");
     overflowWrap.classList.add("overflow-wrapper");
     cardBackground.classList.add("card-background");
     bookDetails.classList.add("book-details");
     bookTitle.classList.add("book-title");
+    trash.classList.add("material-icons-outlined");
 
     cardBackground.style.backgroundImage = `url(${book.cover})`;
     bookCover.src = `${book.cover}`;
     bookTitle.textContent = `${book.title}`;
+    trash.textContent = "delete";
 
     bookCard.appendChild(overflowWrap);
+    bookCard.appendChild(trash);
     overflowWrap.appendChild(cardBackground);
     bookCard.appendChild(bookCover);
     bookCard.appendChild(bookDetails);
@@ -87,6 +100,10 @@ function createCard(book) {
 
     bookList.appendChild(bookCard);
 
+}
+
+function generateId() {
+    return new Date().getTime();
 }
 
 const modal = document.querySelector(".modal");
@@ -111,3 +128,14 @@ function toggleModal() {
 }
 
 displayBooks();
+
+document.addEventListener('click', e => {
+    if (e.target.parentNode.getAttribute("data-key")) {
+        library.forEach(book => {
+            if(book.id == e.target.parentNode.getAttribute("data-key")){
+                library.splice(library.indexOf(book), 1);
+            }
+        })
+    };
+    displayBooks();
+})
