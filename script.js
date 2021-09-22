@@ -21,48 +21,72 @@ function Book(cover, title, author, pages, read) {
     this.read = read
 }
 
-function addBookToLibrary(title, author, pages) {
-    library.push(new Book(title, author, pages));
+function addBookToLibrary(cover, title, author, pages) {
+    library.push(new Book(cover, title, author, pages));
 }
 
 function getDetails() {
+    let cover = document.querySelector("#cover").value;
     let title = document.querySelector("#title").value;
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;
 
-    return [title, author, pages];
+    return [cover, title, author, pages];
 
 }
 
 const btn = document.querySelector("button");
-btn.addEventListener('click', () => {
+btn.addEventListener("click", () => {
     let details = getDetails();
     addBookToLibrary(details[0], details[1], details[2]);
+    displayBooks();
 })
 
 
 const bookList = document.querySelector(".book-list");
 function displayBooks() {
+    bookList.innerHTML = "";
     library.forEach(book => {
-        bookList.innerHTML += `
-        <div class="book-card"">
-            <div class="overflow-wrapper">
-                <div class="card-background" style="background-image:url(${book.cover})">
-            </div>
-            </div>
-            <div class="book-img"><img src="${book.cover}" alt=""></div>
-            <div class="book-details">
-                <p class="book-title">${book.title}</p>
-                <ul>
-                    <li>${book.author}</li>
-                    <li>&#8226;</li>
-                    <li>${book.pages} pages</li>
-                    <li>&#8226;</li>
-                    <li>${book.read}</li>
-                </ul>
-            </div>
-        </div>`;
+        createCard(book);
     })
+}
+
+function createCard(book) {
+    const bookCard = document.createElement("div");
+    const overflowWrap = document.createElement("div");
+    const cardBackground = document.createElement("div");
+    const bookCover = document.createElement("img");
+    const bookDetails = document.createElement("div");
+    const bookTitle = document.createElement("p");
+    const ul = document.createElement("ul");
+
+    bookCard.classList.add("book-card");
+    overflowWrap.classList.add("overflow-wrapper");
+    cardBackground.classList.add("card-background");
+    bookDetails.classList.add("book-details");
+    bookTitle.classList.add("book-title");
+
+    cardBackground.style.backgroundImage = `url(${book.cover})`;
+    bookCover.src = `${book.cover}`;
+    bookTitle.textContent = `${book.title}`;
+
+    bookCard.appendChild(overflowWrap);
+    overflowWrap.appendChild(cardBackground);
+    bookCard.appendChild(bookCover);
+    bookCard.appendChild(bookDetails);
+    bookDetails.appendChild(bookTitle);
+    bookDetails.appendChild(ul);
+
+    const liArray = [`${book.author}`, "•", `${book.pages}`,'•' , `${book.read}`];
+    for (let i = 0; i <= liArray.length - 1; i++) {
+        const li = document.createElement('li');
+
+        li.textContent = liArray[i];
+        ul.appendChild(li);
+    }
+
+    bookList.appendChild(bookCard);
+
 }
 
 displayBooks();

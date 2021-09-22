@@ -12,34 +12,40 @@
 <body>
 
     <main>
-        <h5 style="">Books you added</h5>
+        <h5>Books you added</h5>
         <div class="book-list">
             <!-- 
-            <div class="book-card">
-                <div class="book-img">
-
-                </div>
-                <div class="book-details">
-                    <p class="book-title"></p>
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
+            <div class="book-card"">
+            <div class="overflow-wrapper">
+                <div class="card-background" style="background-image:url(${book.cover})">
             </div>
+            </div>
+            <div class="book-img"><img src="${book.cover}" alt=""></div>
+            <div class="book-details">
+                <p class="book-title">${book.title}</p>
+                <ul>
+                    <li>${book.author}</li>
+                    <li>&#8226;</li>
+                    <li>${book.pages} pages</li>
+                    <li>&#8226;</li>
+                    <li>${book.read}</li>
+                </ul>
+            </div>
+        </div>
         -->
         </div>
+        <form>
+            <label for="cover">Cover</label>
+            <input type="text" name="cover" id="cover" value="">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value="">
+            <label for="author">Author</label>
+            <input type="text" name="author" id="author" value="">
+            <label for="pages">Pages</label>
+            <input type="text" name="pages" id="pages" value="">
+        </form>
+        <button>Store book</button>
     </main>
-    <form>
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title">
-        <label for="author">Author</label>
-        <input type="text" name="author" id="author">
-        <label for="pages">Pages</label>
-        <input type="text" name="pages" id="pages">
-    </form>
-    <button>Store book</button>
 
     <script src="script.js"></script>
 </body>
