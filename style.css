@@ -58,14 +58,17 @@ main {
 } */
 
 .material-icons-outlined {
-    position: absolute;
-    right: .5em;
-    top: .5em;
+    font-size: 18px;
     transition: all .3s ease-out;
 }
 .material-icons-outlined:hover {
     cursor: pointer;
     color: brown;
+}
+
+.controls {
+    display: flex;
+    margin-bottom: .5em;
 }
 
 #read-toggle {

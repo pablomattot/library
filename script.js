@@ -44,29 +44,36 @@ function createCard(book) {
     const bookDetails = document.createElement("div");
     const bookTitle = document.createElement("p");
     const ul = document.createElement("ul");
+    const controls = document.createElement("div");
     const trash = document.createElement("span");
+    const edit = document.createElement("span");
 
     bookCard.classList.add("book-card");
     overflowWrap.classList.add("overflow-wrapper");
     cardBackground.classList.add("card-background");
     bookDetails.classList.add("book-details");
     bookTitle.classList.add("book-title");
+    controls.classList.add("controls");
     trash.classList.add("material-icons-outlined");
+    edit.classList.add("material-icons-outlined");
 
     cardBackground.style.backgroundImage = `url(${book.cover})`;
     bookCover.src = `${book.cover}`;
     bookTitle.textContent = `${book.title}`;
     trash.textContent = "delete";
+    edit.textContent = book.readStatus ? "visibility" : "visibility_off";
 
     bookCard.appendChild(overflowWrap);
-    bookCard.appendChild(trash);
     overflowWrap.appendChild(cardBackground);
     bookCard.appendChild(bookCover);
     bookCard.appendChild(bookDetails);
+    bookDetails.appendChild(controls);
+    controls.appendChild(trash);
+    controls.appendChild(edit);
     bookDetails.appendChild(bookTitle);
     bookDetails.appendChild(ul);
 
-    const liArray = [`${book.author}`, "•", `${book.pages}`, '•', `${book.readStatus}`];
+    const liArray = [`${book.author}`, "•", `${book.pages} pages`];
     for (let i = 0; i <= liArray.length - 1; i++) {
         const li = document.createElement('li');
 
@@ -114,18 +121,30 @@ function addBookToLibrary() {
     displayBooks();
 }
 
-// Deleting a book
+// Deleting a book or Updating read status
 bookList.addEventListener('click', e => {
     const bookCard = e.target.parentNode;
+    const cardArray = Array.from(bookList.childNodes)
     // User clicks delete
-    if (e.target.textContent === "delete") deleteBook(bookCard);
+    if (e.target.textContent === "delete") deleteBook(bookCard, cardArray);
+    // User clicks update
+    if (e.target.textContent === "visibility" || e.target.textContent === "visibility_off") updateRead(bookCard, cardArray);
+    displayBooks();
 })
 
 // Book gets deleted from myLibrary
-function deleteBook(bookCard) {
-    const cardArray = Array.from(bookList.childNodes)
-    myLibrary.splice(cardArray.indexOf(bookCard), 1);
-    displayBooks();
+function deleteBook(bookCard, cardArray) {
+    myLibrary.splice(cardArray.indexOf((bookCard.parentNode).parentNode), 1);
+}
+
+// Book read status gets updated
+function updateRead(bookCard, cardArray) {
+    const read = myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus;
+    if(read) {
+        myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus = false;
+    } else {
+        myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus = true
+    }
 }
 
 displayBooks();
