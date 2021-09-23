@@ -52,7 +52,7 @@ storeBtn.addEventListener("click", () => {
 
 const bookList = document.querySelector(".book-list");
 function displayBooks() {
-    bookList.innerHTML = "";
+    bookList.textContent = "";
     library.forEach(book => {
         createCard(book);
     })
@@ -130,7 +130,7 @@ function toggleModal() {
 displayBooks();
 
 document.addEventListener('click', e => {
-    if (e.target.parentNode.getAttribute("data-key")) {
+    if (e.target.parentNode.getAttribute("data-key") && e.target.innerText === "delete") {
         library.forEach(book => {
             if(book.id == e.target.parentNode.getAttribute("data-key")){
                 library.splice(library.indexOf(book), 1);
