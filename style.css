@@ -71,12 +71,6 @@ main {
     margin-bottom: .5em;
 }
 
-#read-toggle {
-    position: absolute;
-    right: 3em;
-    top: 1.25em;
-}
-
 .overflow-wrapper, .card-background {
     position: absolute;
     top: 0;
