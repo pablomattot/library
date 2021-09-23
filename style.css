@@ -49,13 +49,13 @@ main {
     transition: all .3s ease-out;
 }
 
-.book-card:hover {
+/* .book-card:hover {
     cursor: pointer;
     transform: translate(3px, -3px);
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
-}
+} */
 
 .material-icons-outlined {
     position: absolute;
@@ -66,6 +66,12 @@ main {
 .material-icons-outlined:hover {
     cursor: pointer;
     color: brown;
+}
+
+#read-toggle {
+    position: absolute;
+    right: 3em;
+    top: 1.25em;
 }
 
 .overflow-wrapper, .card-background {

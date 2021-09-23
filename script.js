@@ -1,59 +1,37 @@
-let library = [
+// Books get stored in myLibrary
+
+let myLibrary = [
     {
         cover: "https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg",
         title: "The Hobbit",
         author: "Tolkien",
         pages: 295,
-        read: false,
-        id: 123
+        readStatus: false,
     },
     {
         cover: "https://images-na.ssl-images-amazon.com/images/I/51MFw+si6RL._SX324_BO1,204,203,200_.jpg",
         title: "The Book of Longings",
         author: "Sue Monk",
         pages: 228,
-        read: false,
-        id: 321
+        readStatus: false,
     }
 ];
 
-function Book(cover, title, author, pages, read, id) {
+function Book(cover, title, author, pages, readStatus) {
     this.cover = cover
     this.title = title
     this.author = author
     this.pages = pages
-    this.read = read
-    this.id = id
+    this.readStatus = readStatus
 }
 
-function addBookToLibrary(cover, title, author, pages, read, id) {
-    library.push(new Book(cover, title, author, pages, read, id));
-}
-
-function getDetails() {
-    let cover = document.querySelector("#cover").value;
-    let title = document.querySelector("#title").value;
-    let author = document.querySelector("#author").value;
-    let pages = document.querySelector("#pages").value;
-    let read = document.querySelector("#read").checked ? "Read" : "Not read yet";
-    let id = generateId();
-
-    return [cover, title, author, pages, read, id];
-
-}
-
-const storeBtn = document.querySelector("#store-button");
-storeBtn.addEventListener("click", () => {
-    let details = getDetails();
-    addBookToLibrary(details[0], details[1], details[2], details[3], details[4], details[5]);
-    displayBooks();
-})
-
-
+// Display the books in myLibrary
+// Loop through library to display books
 const bookList = document.querySelector(".book-list");
 function displayBooks() {
     bookList.textContent = "";
-    library.forEach(book => {
+    myLibrary.forEach(book => {
+        // Create a card for each book
         createCard(book);
     })
 }
@@ -67,8 +45,6 @@ function createCard(book) {
     const bookTitle = document.createElement("p");
     const ul = document.createElement("ul");
     const trash = document.createElement("span");
-
-    bookCard.setAttribute("data-key", `${book.id}`);
 
     bookCard.classList.add("book-card");
     overflowWrap.classList.add("overflow-wrapper");
@@ -90,7 +66,7 @@ function createCard(book) {
     bookDetails.appendChild(bookTitle);
     bookDetails.appendChild(ul);
 
-    const liArray = [`${book.author}`, "•", `${book.pages}`, '•', `${book.read}`];
+    const liArray = [`${book.author}`, "•", `${book.pages}`, '•', `${book.readStatus}`];
     for (let i = 0; i <= liArray.length - 1; i++) {
         const li = document.createElement('li');
 
@@ -102,15 +78,13 @@ function createCard(book) {
 
 }
 
-function generateId() {
-    return new Date().getTime();
-}
-
+// Adding a new book
+// User clicks 'add new book'
 const modal = document.querySelector(".modal");
 const modalBtn = document.querySelector("#modal-btn");
 
 modalBtn.addEventListener('click', () => {
-    toggleModal();
+    modal.style.display = "block";
 })
 
 window.onclick = function (event) {
@@ -119,23 +93,39 @@ window.onclick = function (event) {
     }
 }
 
-function toggleModal() {
-    if (modal.style.display !== "block") {
-        modal.style.display = "block";
-    } else {
-        modal.style.display = "none";
-    }
+// Get the details when user clicks 'store book'
+const storeBtn = document.querySelector("#store-button");
+storeBtn.addEventListener("click", addBookToLibrary);
+
+function getDetails() {
+    let cover = document.querySelector("#cover").value;
+    let title = document.querySelector("#title").value;
+    let author = document.querySelector("#author").value;
+    let pages = document.querySelector("#pages").value;
+    let read = document.querySelector("#read-status").checked;
+
+    return [cover, title, author, pages, read];
+}
+
+// Create new book with details
+function addBookToLibrary() {
+    let details = getDetails();
+    myLibrary.push(new Book(details[0], details[1], details[2], details[3], details[4]));
+    displayBooks();
+}
+
+// Deleting a book
+bookList.addEventListener('click', e => {
+    const bookCard = e.target.parentNode;
+    // User clicks delete
+    if (e.target.textContent === "delete") deleteBook(bookCard);
+})
+
+// Book gets deleted from myLibrary
+function deleteBook(bookCard) {
+    const cardArray = Array.from(bookList.childNodes)
+    myLibrary.splice(cardArray.indexOf(bookCard), 1);
+    displayBooks();
 }
 
 displayBooks();
-
-document.addEventListener('click', e => {
-    if (e.target.parentNode.getAttribute("data-key") && e.target.innerText === "delete") {
-        library.forEach(book => {
-            if(book.id == e.target.parentNode.getAttribute("data-key")){
-                library.splice(library.indexOf(book), 1);
-            }
-        })
-    };
-    displayBooks();
-})
