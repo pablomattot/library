@@ -25,6 +25,9 @@ function Book(cover, title, author, pages, readStatus) {
     this.readStatus = readStatus
 }
 
+// Localstorage
+
+
 // Display the books in myLibrary
 // Loop through library to display books
 const bookList = document.querySelector(".book-list");
@@ -140,7 +143,7 @@ function deleteBook(bookCard, cardArray) {
 // Book read status gets updated
 function updateRead(bookCard, cardArray) {
     const read = myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus;
-    if(read) {
+    if (read) {
         myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus = false;
     } else {
         myLibrary[cardArray.indexOf((bookCard.parentNode).parentNode)].readStatus = true

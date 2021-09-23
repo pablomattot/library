@@ -9,5 +9,6 @@ This is a library app and the sixth exercise following The Odin Project.
 
 
 ###### To-do's
-- [ ] Add a button on each book's display to chance read status
-- [ ] Look into localStorage
+- [x] Add a button on each book's display to change read status
+- [ ] Add localstorage support
+- [ ] Add form verification
