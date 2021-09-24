@@ -105,7 +105,10 @@ window.onclick = function (event) {
 
 // Get the details when user clicks 'store book'
 const storeBtn = document.querySelector("#store-button");
-storeBtn.addEventListener("click", addBookToLibrary);
+storeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    addBookToLibrary();
+});
 
 function getDetails() {
     let cover = document.querySelector("#cover").value;
