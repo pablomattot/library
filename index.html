@@ -6,47 +6,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-    <header>
-        <div class="nav">
-            <h1>myLib<span style="color: #ff9900;">.</span></h1>
-            <ul>
-                <li><a href="#" id="modal-btn">Add a Book</a></li>
-                <li><a href="#">Log In</a></li>
-            </ul>
-        </div>
-    </header>
+    <div class="wrapper">
 
-    <main>
-        <h5>Books you added</h5>
-        <div class="book-list">
+        <header class="grid-container">
+            <h1>myLib<span>.</span></h1>
+            <div class="buttons flex-container">
+                <button id="modal-btn">Add new book</button>
+            </div>
+        </header>
 
-        </div>
-        <div class="modal">
-            <form>
-                <label for="cover">Cover</label>
-                <input type="text" name="cover" id="cover" value="">
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title" value="">
-                <label for="author">Author</label>
-                <input type="text" name="author" id="author" value="">
-                <label for="pages">Pages</label>
-                <input type="number" min="0" name="pages" id="pages" oninput="validity.valid||(value='');">
-                <label for="read-status">Read</label>
-                <input type="checkbox" id="read-status">
+        <hr>
 
-                <button id="store-button">Store book</button>
-            </form>
-        </div>
-    </main>
+        <main>
+            <section class="book-list grid-container">
+                    <!-- <div class="book card grid-container">
+                        <h2>Harry Potter and the Philosopher's Stone</h2>
+                        <div class="book-info flex-container">
+                            <p>JK Rowling</p>
+                            <p>431 pages</p>
+                        </div>
+                        <div class="book-options">
+                            <span class="material-icons-outlined">
+                                delete
+                            </span>
+                            <span class="material-icons-outlined">
+                                visibility
+                            </span>
+                        </div>
+                    </div> -->
+            </section>
 
-    <script src="script.js"></script>
+            <div class="modal flex-container">
+                <form class="flex-container card">
+                    <fieldset class="flex-container">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" required>
+                    </fieldset>
+                    <fieldset class="flex-container">
+                        <label for="author">Author</label>
+                        <input type="text" name="author" id="author" required>
+                    </fieldset>
+                    <fieldset class="flex-container">
+                        <label for="pages">Pages</label>
+                        <input type="text" name="pages" id="pages" required>
+                    </fieldset>
+                    <div class="buttons">
+                        <button id="store-button">ADD</button>
+                        <button id="cancel">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="/script.js"></script>
 </body>
 
 </html>
